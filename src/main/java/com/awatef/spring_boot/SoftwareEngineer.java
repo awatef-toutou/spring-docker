@@ -1,8 +1,17 @@
 package com.awatef.spring_boot;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+//creation des tables
 import java.util.Objects;
+@Entity
+
 
 public class SoftwareEngineer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
     private String name;
     private String techStack;
