@@ -1,8 +1,10 @@
 package com.awatef.spring_boot;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/software-engineers")
@@ -46,10 +48,20 @@ public class SoftwareEngineerController {
 
     @PutMapping("/{id}")
     public void upDateSoftwareEngineer( @PathVariable Integer id,
-                                        @RequestBody   SoftwareEngineer softwareEngineer){
+                                        @RequestBody   SoftwareEngineer update){
 
-        service.modifySoftwareEngineer(id,softwareEngineer);
+        update.setId(id);
+        service.modifySoftwareEngineer(update);
     }
+
+    @PatchMapping("v1/{id}")
+    public void partialUpdateSoftEbgineer(
+            @PathVariable Integer id, // en recupére l id
+            @RequestBody Map<String , Object> updates )
+    {
+        service.partialUpdateSoftwareEngineerV1(id, updates);
+    }
+
 
 
 }
