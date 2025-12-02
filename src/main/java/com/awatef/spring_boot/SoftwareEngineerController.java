@@ -33,17 +33,22 @@ public class SoftwareEngineerController {
 
     @GetMapping("/{id}")
     public SoftwareEngineer getSoftEngineerByID(@PathVariable Integer id)
-    //ON RECUPERER D PARES L URL SUR POST MAN
+    //ON RECUPERE D PARES L URL SUR POST MAN
     {
         return service.getSoftEngineerByID(id);
 
     }
 
     @PostMapping
-    public void addSoftwareEngineer(
-      @RequestBody   SoftwareEngineer softwareEngineer
-    ) {
+    public void addSoftwareEngineer(@RequestBody   SoftwareEngineer softwareEngineer) {
         service.createANewSoftwareEngineer(softwareEngineer);
+    }
+
+    @PutMapping("/{id}")
+    public void upDateSoftwareEngineer( @PathVariable Integer id,
+                                        @RequestBody   SoftwareEngineer softwareEngineer){
+
+        service.modifySoftwareEngineer(id,softwareEngineer);
     }
 
 

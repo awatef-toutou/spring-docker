@@ -33,4 +33,18 @@ public class SoftwareEngineerServices {
         //@requestbody pour recuperer l objet
         repository.save(softwareEngineer);
     }
+
+    public SoftwareEngineer modifySoftwareEngineer(Integer id,SoftwareEngineer softwareEngineer) {
+
+        SoftwareEngineer existingEngineer = getSoftEngineerByID(id);
+
+        existingEngineer.setName(softwareEngineer.getName());
+        existingEngineer.setTechStack(softwareEngineer.getTechStack());
+        return repository.save(existingEngineer);
+    }
 }
+/*
+        SoftwareEngineer existingEngineer = getSoftwareEngineerById(id);
+        existingEngineer.setName(updatedEngineer.getName());
+        existingEngineer.setTechStack(updatedEngineer.getTechStack());
+        return repository.save(existingEngineer); */
