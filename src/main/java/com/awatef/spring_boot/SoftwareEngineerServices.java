@@ -2,10 +2,13 @@ package com.awatef.spring_boot;
 
 import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.lang.reflect.Field;
+import java.sql.Ref;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -60,8 +63,27 @@ public class SoftwareEngineerServices {
 
     private Optional<SoftwareEngineer> findSoftwareEngineerById(Integer id) {
        return Optional.ofNullable(repository.findById(id) .orElseThrow(
-                ()-> new IllegalArgumentException("software Engineer " +id+" not found")
+                ()-> new IllegalArgumentException("software Engineer " +id+ " not found")
        ));
+    }
+
+    public void partialUpdateSoftwareEngineerV2(Integer id, Map<String, Object> updates) {
+        SoftwareEngineer engineerToUpdate = getSoftEngineerByID(id); //recuper  the user et l affecter à engineerUpdate
+        updates.forEach((key,value)//on cherche user sur notre Map: updates(name,teckstack)
+                -> {
+            Field field = ReflectionUtils.findField(SoftwareEngineer.class,key);
+            //je cherche sur la class la clé à modifier
+            // et on le stock dans field
+            if(field != null)
+            {
+                field.setAccessible(true); //on modifie la valeur
+                //ReflectionUtils.makeAccessible(field); // deusieme methode
+                ReflectionUtils.setField(field, engineerToUpdate, value); // on remplie les mofications faite sur field
+                //ici value c 'est lanouvelle valeur
+            }
+
+        });
+        repository.save(engineerToUpdate);
     }
 }
 

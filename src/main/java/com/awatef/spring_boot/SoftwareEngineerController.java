@@ -54,12 +54,14 @@ public class SoftwareEngineerController {
         service.modifySoftwareEngineer(update);
     }
 
+    //premiere methode
     @PatchMapping("v1/{id}")
-    public void partialUpdateSoftEbgineer(
+    public void partialUpdateSoftEbgineerV1(
             @PathVariable Integer id, // en recupére l id
             @RequestBody Map<String , Object> updates )
     {
-        service.partialUpdateSoftwareEngineerV1(id, updates);
+       // service.partialUpdateSoftwareEngineerV1(id, updates);
+        service.partialUpdateSoftwareEngineerV2(id, updates); //deusieme methode
     }
 
 
